@@ -60,7 +60,13 @@ jobs:
           terraform_version: 1.9
 
       - name: Terraform Init
-        run: terraform init
+        run : | 
+          terraform init \          
+          -backend-config="storage_account_name=${{ secrets. TF_VAR_AZURE_STORAGE_ACCOUNT}}" \          
+          -backend-config="container_name=${{ secrets.TF_VAR_AZURE_STORAGE_CONTAINER}}" \         
+          -backend-config="key=${{secrets.TF_VAR_TF_STATE_FILE_KEY}}" \          
+          -backend-config="resource_group_name=${{secrets.TF_VAR_AZURE_RESOURCE_GROUP}}"
+        
     
       - name: Terraform plan
         id: plan
