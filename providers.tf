@@ -14,6 +14,12 @@ terraform {
     #   version = ">= 1.4.0, < 2.0" #"~> 1.13"
     # }
   }
+  backend "azurerm" {
+    resource_group_name   = "AVD-RG"
+    storage_account_name  = "rgmtfstatestorageaccount"
+    container_name        = "gmrtfsate"
+    key                   = "avd.tfstate"
+  }
 }
 
 provider "azurerm" {
