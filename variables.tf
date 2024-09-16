@@ -171,7 +171,25 @@ variable "storage_accont_name" {
   type        = string
 }
 
+variable "TENANT_ID" {
+  type        = string
+  nullable    = false
+}
 
+  variable "CLIENT_ID" {
+  type        = string
+  nullable    = false
+}
+
+variable "CLIENT_SECRET" {
+  type        = string
+  nullable    = false
+}
+
+variable "SUBSCRIPTION_ID" {
+  type        = string
+  nullable    = false
+}
 
 
 
