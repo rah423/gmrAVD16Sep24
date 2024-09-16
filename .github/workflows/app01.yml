@@ -73,7 +73,11 @@ jobs:
           #   -backend-config="container_name=${{ secrets.TF_VAR_AZURE_STORAGE_CONTAINER}}" \         
           #   -backend-config="key=${{secrets.TF_VAR_TF_STATE_FILE_KEY}}" \          
           #   -backend-config="resource_group_name=${{secrets.TF_VAR_AZURE_RESOURCE_GROUP}}"
-        
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
     
       - name: Terraform plan
         id: plan
