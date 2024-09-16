@@ -49,6 +49,7 @@ module "avm-res-keyvault-vault_example_default" {
   name                = var.keyvault_name
   enable_telemetry    = var.enable_telemetry
   tenant_id           = var.tenant_id
+  depends_on = [ azurerm_resource_group.this ]
 }
 
 # module "avm-res-keyvault-vault_secret" {
@@ -62,20 +63,22 @@ module "avm-res-keyvault-vault_example_default" {
 module "avm-res-storage-storageaccount" {
   source              = "Azure/avm-res-storage-storageaccount/azurerm"
   name                = var.storage_accont_name
-  resource_group_name = var.resource_group_name
+  resource_group_name = azurerm_resource_group.this.name
   location            = var.location
   version             = "0.2.6"
+  depends_on = [ azurerm_resource_group.this ]
 }
 
 module "avm-res-desktopvirtualization-hostpool" {
   source                                        = "Azure/avm-res-desktopvirtualization-hostpool/azurerm"
   version                                       = "0.2.1"
-  resource_group_name                           = var.resource_group_name
+  resource_group_name                           = azurerm_resource_group.this.name
   virtual_desktop_host_pool_load_balancer_type  = var.virtual_desktop_host_pool_load_balancer_type
   virtual_desktop_host_pool_location            = var.location
   virtual_desktop_host_pool_name                = var.virtual_desktop_host_pool_name
-  virtual_desktop_host_pool_resource_group_name = var.resource_group_name
+  virtual_desktop_host_pool_resource_group_name = azurerm_resource_group.this.name
   virtual_desktop_host_pool_type                = var.virtual_desktop_host_pool_type
+
 }
 module "avm-res-desktopvirtualization-applicationgroup" {
   source                                                = "Azure/avm-res-desktopvirtualization-applicationgroup/azurerm"
@@ -83,16 +86,16 @@ module "avm-res-desktopvirtualization-applicationgroup" {
   virtual_desktop_application_group_host_pool_id        = module.avm-res-desktopvirtualization-hostpool.resource.id
   virtual_desktop_application_group_location            = var.location
   virtual_desktop_application_group_name                = var.virtual_desktop_application_group_name
-  virtual_desktop_application_group_resource_group_name = var.resource_group_name
+  virtual_desktop_application_group_resource_group_name = azurerm_resource_group.this.name
   virtual_desktop_application_group_type                = var.virtual_desktop_application_group_type
 }
 module "avm-res-desktopvirtualization-workspace" {
   source                                        = "Azure/avm-res-desktopvirtualization-workspace/azurerm"
   version                                       = "0.1.5"
-  resource_group_name                           = var.resource_group_name
+  resource_group_name                           = azurerm_resource_group.this.name
   virtual_desktop_workspace_location            = var.location
   virtual_desktop_workspace_name                = var.virtual_desktop_workspace_name
-  virtual_desktop_workspace_resource_group_name = var.resource_group_name
+  virtual_desktop_workspace_resource_group_name = azurerm_resource_group.this.name
 }
 
 
