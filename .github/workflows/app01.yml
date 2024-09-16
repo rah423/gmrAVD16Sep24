@@ -61,7 +61,7 @@ jobs:
 
       - name: Terraform Init 
         run : | 
-          terraform init -chdir=${{ github.action_path }}\          
+          terraform -chdir=${{ github.action_path }} init \          
             -backend-config="storage_account_name=${{ secrets. TF_VAR_AZURE_STORAGE_ACCOUNT}}" \          
             -backend-config="container_name=${{ secrets.TF_VAR_AZURE_STORAGE_CONTAINER}}" \         
             -backend-config="key=${{secrets.TF_VAR_TF_STATE_FILE_KEY}}" \          
