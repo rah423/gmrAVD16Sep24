@@ -83,6 +83,12 @@ jobs:
         id: plan
         if: ${{ github.event.inputs.action == 'plan&apply' || github.event.inputs.action == 'plan' || github.event.inputs.action == 'plan&destroy' }}
         run: terraform plan -out="main.tfplan" -var-file="deploy.tfvars" -input=false
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
 
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
@@ -93,7 +99,17 @@ jobs:
       - name: App01 Infra Deployment
         if: ${{ github.event.inputs.action == 'plan&apply' }}
         run: terraform apply --auto-approve "main.tfplan"
-
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          
       - name: Terraform Destroy
         if: ${{ github.event.inputs.action == 'plan&destroy' }}
         run: terraform destroy -auto-approve -var-file="deploy.tfvars"
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
